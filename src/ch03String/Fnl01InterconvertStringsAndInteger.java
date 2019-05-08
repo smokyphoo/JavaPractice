@@ -8,30 +8,39 @@ package ch03String;
  */
 public class Fnl01InterconvertStringsAndInteger {
 
-  public static void main(String[] args){
-    String str = "-1234";
-    int integer = -1234;
-
-    System.out.println(stringToInteger(str)+1);
-    System.out.println(integerToString(integer)+"a");
-
+  public static void main(String[] args) {
+    String str = "-4321";
+    System.out.println(stringToInteger(str)+2);
+    System.out.println(integerToString(stringToInteger(str))+2);
   }
 
-  public static int stringToInteger(String str){
+  public static int stringToInteger(String str) {
     int result = 0;
-    for(int i = 1; i<=str.length();i++){
-      int a = str.charAt(i) -'0';
 
+    for (int i = str.charAt(0) == '-' ? 1 : 0; i < str.length(); ++i) {
+      final int digit = str.charAt(i) - '0';
+      result = result * 10 + digit;
     }
-    if(str.charAt(0) == '-'){
-      result *= -1;
-    }
-
-    return 0;
+    return str.charAt(0) == '-' ? -result : result;
   }
 
-  public static String integerToString(int integer){
-    integer
-    return null;
+  public static String integerToString(int integer) {
+    boolean isNegative = false;
+
+    if( integer < 0){
+      isNegative = true;
+    }
+    StringBuilder s = new StringBuilder();
+    do {
+      s.append((char)('0'+Math.abs(integer%10)));
+      integer/=10;
+    }while (integer!=0);
+
+    if(isNegative){
+      s.append('-');
+    }
+    s.reverse();
+    return s.toString();
   }
+
 }
